@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>apple</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        .box-wrap{
+            width: 800px;
+            height:600px;
+            margin:0 auto;
+            background:url(img/apple.png) no-repeat;
+            overflow:hidden;
+        }
+        #box{
+            width: 600px;
+            position: absolute;
+            bottom: 150px;
+            left: 50%;
+            margin-left: -200px;
+        }
+        #box img{
+            width: 64px;
+        }
+        input{
+            width: 140px;
+        }
+    </style>
+    <script>
+        function getPos(obj){
+            var l=0;
+            var t=0;
+
+            while(obj){
+                l+=obj.offsetLeft;
+                t+=obj.offsetTop;
+
+                obj=obj.offsetParent;
+            }
+            return {left: l, top: t};
+        }
+        window.onload = function () {
+            var oBox=document.getElementById('box');
+            var aImg=oBox.getElementsByTagName('img');
+
+            document.onmousemove=function(ev){
+                var oEvent=ev || event;
+
+                for(var i=0; i<aImg.length; i++){
+                    var a=aImg[i].offsetWidth/2+getPos(aImg[i]).left-oEvent.clientX;
+                    var b=aImg[i].offsetHeight/2+getPos(aImg[i]).top-oEvent.clientY;
+
+                    var c=Math.sqrt(a*a+b*b);
+                    var scale=1-c/500;
+                    scale<0.5 && (scale=0.5);
+                    aImg[i].style.width=scale*128+'px';
+                    aImg[i].style.height=scale*128+'px';
+                }
+            };
+        };
+    </script>
+</head>
+<body>
+   <div class="box-wrap">
+       <div id="box">
+           <img src="img/1.png">
+           <img src="img/2.png">
+           <img src="img/3.png">
+           <img src="img/4.png">
+           <img src="img/5.png">
+       </div>
+   </div>
+
+</body>
+</html>

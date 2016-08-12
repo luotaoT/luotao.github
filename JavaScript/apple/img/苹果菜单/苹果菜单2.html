@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>智能社--http://www.zhinengshe.com</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        #ul1{
+            width: 600px;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            margin-left: -300px;
+        }
+        #ul1 li{
+            width: 64px;
+            height: 64px;
+            float: left;
+            list-style: none;
+            margin: 20px;
+        }
+        #ul1 li img{
+            width: 100%;
+        }
+        input{
+            width: 140px;
+        }
+    </style>
+    <script>
+        function getPos(obj){
+            var l=0;
+            var t=0;
+
+            while(obj){
+                l+=obj.offsetLeft;
+                t+=obj.offsetTop;
+
+                obj=obj.offsetParent;
+            }
+            return {left: l, top: t};
+        }
+        window.onload = function () {
+            var oUl=document.getElementById('ul1');
+            var aLi=oUl.children;
+            var aT=document.getElementsByTagName('input');
+
+            document.onmousemove=function(ev){
+                var oEvent=ev || event;
+
+                for(var i=0; i<aLi.length; i++){
+                    var a=aLi[i].offsetWidth/2+getPos(aLi[i]).left-oEvent.clientX;
+                    var b=aLi[i].offsetHeight/2+getPos(aLi[i]).top-oEvent.clientY;
+
+                    var c=Math.sqrt(a*a+b*b);
+                    var scale=1-c/500;
+                    aT[i].value=scale.toFixed(2);
+                }
+            };
+        };
+    </script>
+</head>
+<body>
+    <input type="text">
+    <input type="text">
+    <input type="text">
+    <input type="text">
+    <input type="text">
+    <ul id="ul1">
+        <li><img src="img/1.png"></li>
+        <li><img src="img/2.png"></li>
+        <li><img src="img/3.png"></li>
+        <li><img src="img/4.png"></li>
+        <li><img src="img/5.png"></li>
+    </ul>
+</body>
+</html>
